@@ -31,7 +31,7 @@ namespace Controllers
             IdentityResult result = await _userManager.CreateAsync(user);
 
             if (result.Succeeded)
-                return ReturnValidation(user);
+                return CreatedAtRoute("GetUserByUsername", new { username = user.UserName }, ReturnValidation(user));
             return BadRequest(result.Errors);
         }
 

@@ -20,11 +20,12 @@ namespace Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EntityUser>>> GetUsers()
         {
-            var users = await _userManager.Users.ToListAsync();
-            return users;
+            IEnumerable<EntityUser> users = await _userManager.Users.ToListAsync();
+
+            return Ok(users);
         }
 
-        [HttpGet("{username}")]
+        [HttpGet("{username}", Name = "GetUserByUsername")]
         public async Task<ActionResult<EntityUser>> GetUserByUsername(string username)
         {
             EntityUser user = await _userManager.FindByNameAsync(username);
@@ -37,7 +38,7 @@ namespace Controllers
         {
             EntityUser user = await _userManager.FindByIdAsync(id);
             if (user != null)
-                return user;
+                return Ok(user);
             return BadRequest("Invalid UserID");
         }
     }
